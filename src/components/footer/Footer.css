@@ -1,0 +1,146 @@
+.footer {
+  background: var(--black);
+  color: var(--white);
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 3rem;
+  padding: 5rem 5rem;
+}
+
+.footer-brand h3 {
+  font-family: "Playfair Display", serif;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.footer-brand h3 span {
+  color: var(--gold);
+  font-style: italic;
+}
+
+.footer-brand p {
+  font-size: 0.85rem;
+  color: #888;
+  line-height: 1.8;
+  max-width: 280px;
+  margin-bottom: 1.5rem;
+}
+
+.footer-socials {
+  display: flex;
+  gap: 1rem;
+}
+
+.footer-socials a {
+  font-size: 1.4rem;
+  color: #888;
+  transition: color 200ms ease;
+}
+
+.footer-socials a:hover {
+  color: var(--gold);
+}
+
+.footer-col h5 {
+  font-family: "Raleway", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.2rem;
+}
+
+.footer-col a,
+.footer-col p {
+  display: block;
+  font-size: 0.88rem;
+  color: #888;
+  margin-bottom: 0.7rem;
+  transition: color 200ms ease;
+  line-height: 1.6;
+}
+
+.footer-col a:hover {
+  color: var(--white);
+}
+
+.footer-newsletter-desc {
+  font-size: 0.82rem;
+  color: #888;
+  margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.footer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.footer-form input {
+  padding: 0.7rem 1rem;
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  color: var(--white);
+  font-family: "Raleway", sans-serif;
+  font-size: 0.85rem;
+  overflow-x: visible;
+}
+
+.footer-form input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.footer-form button {
+  padding: 0.7rem 1rem;
+  background: var(--gold);
+  border: none;
+  color: var(--black);
+  font-family: "Raleway", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 250ms ease;
+}
+
+.footer-form button:hover {
+  background: var(--gold-light);
+}
+
+.footer-bottom {
+  border-top: 1px solid #1f1f1f;
+  padding: 1.5rem 5rem;
+  text-align: center;
+}
+
+.footer-bottom p {
+  font-size: 0.78rem;
+  color: #555;
+  letter-spacing: 0.05em;
+}
+
+@media screen and (max-width: 1024px) {
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+    padding: 3rem 2rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 2.5rem 1.5rem;
+  }
+
+  .footer-bottom {
+    padding: 1.5rem;
+  }
+}
