@@ -25,7 +25,7 @@ const ProductDetail = ({ onAddToCart }) => {
       <div className="pd-info">
         <p className="pd-category">{category}</p>
         <h1>{name}</h1>
-        <p className="pd-price">${price}</p>
+        <p className="pd-price">Ksh {price.toLocaleString()}</p>
         <p className="pd-desc">{description}</p>
         <div className="pd-actions">
           <button className="btn btn-gold" onClick={() => onAddToCart(product)}>

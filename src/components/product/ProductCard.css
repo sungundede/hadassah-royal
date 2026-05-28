@@ -1,51 +1,84 @@
 .product-card {
   display: flex;
   flex-direction: column;
-  background: var(--white);
-  border: 1px solid var(--gray-light);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
   position: relative;
-  transition: transform 300ms ease, box-shadow 300ms ease;
+  transition:
+    transform  360ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 360ms ease,
+    border-color 360ms ease;
 }
 
-.product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.09);
-}
-
-.product-card.dark {
-  background: #1a1a1a;
-  border-color: #2a2a2a;
-}
-
-.product-tag {
+.product-card::before {
+  content: "";
   position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  background: var(--gold);
-  color: var(--black);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.25rem 0.6rem;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 169, 110, 0.5), transparent);
+  opacity: 0;
+  transition: opacity 360ms ease;
   z-index: 1;
 }
 
-.product-image-link {
-  display: block;
+.product-card:hover {
+  transform: translateY(-7px);
+  border-color: rgba(201, 169, 110, 0.28);
+  box-shadow:
+    0 28px 56px rgba(0, 0, 0, 0.45),
+    0 0 36px rgba(201, 169, 110, 0.07);
 }
 
+.product-card:hover::before { opacity: 1; }
+
+.product-card.dark {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ── tag ──────────────────────────────────────────────────────── */
+.product-tag {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
+  color: var(--black);
+  font-family: "Space Mono", monospace;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.28rem 0.65rem;
+  border-radius: 4px;
+  z-index: 2;
+  box-shadow: 0 0 14px var(--gold-glow);
+}
+
+/* ── image area ───────────────────────────────────────────────── */
+.product-image-link { display: block; }
+
 .product-image {
-  height: 280px;
-  background: var(--gray-light);
+  height: 260px;
+  background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+  border-bottom: 1px solid var(--border);
+  transition: background 360ms ease;
+}
+
+.product-card:hover .product-image {
+  background: linear-gradient(145deg, rgba(201,169,110,0.08) 0%, rgba(255,255,255,0.02) 100%);
 }
 
 .product-card.dark .product-image {
-  background: #2a2a2a;
+  background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
 }
 
+/* ── text area ────────────────────────────────────────────────── */
 .product-info {
-  padding: 1.2rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -53,58 +86,62 @@
 }
 
 .product-name {
-  font-size: 1rem;
+  font-size: 0.97rem;
   font-weight: 600;
-  transition: color 200ms ease;
-}
-
-.product-card.dark .product-name {
   color: var(--white);
+  transition: color 220ms ease;
+  line-height: 1.4;
 }
 
-.product-name:hover {
-  color: var(--gold);
-}
+.product-name:hover { color: var(--gold); }
+
+.product-card.dark .product-name { color: var(--white); }
 
 .product-desc {
-  font-size: 0.8rem;
-  color: var(--gray);
-  line-height: 1.6;
+  font-size: 0.79rem;
+  color: var(--muted);
+  line-height: 1.65;
+  flex: 1;
 }
 
-.product-card.dark .product-desc {
-  color: #888;
-}
-
+/* ── footer row ───────────────────────────────────────────────── */
 .product-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border);
 }
 
 .product-price {
   font-family: "Playfair Display", serif;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  color: var(--gold);
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .product-add {
-  background: none;
-  border: 1px solid var(--gold);
+  background: transparent;
+  border: 1px solid rgba(201, 169, 110, 0.35);
   color: var(--gold);
-  font-family: "Raleway", sans-serif;
-  font-size: 0.7rem;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.67rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   padding: 0.45rem 0.9rem;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 250ms ease, color 250ms ease;
+  transition: all 250ms ease;
 }
 
 .product-add:hover {
-  background: var(--gold);
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
   color: var(--black);
+  border-color: transparent;
+  box-shadow: 0 0 18px var(--gold-glow);
 }

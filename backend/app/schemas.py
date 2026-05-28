@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, ConfigDict, EmailStr
 
 
 class UserCreate(BaseModel):
@@ -10,14 +10,13 @@ class UserCreate(BaseModel):
 
 
 class UserRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     email: EmailStr
     name: Optional[str] = None
     is_active: bool
     created_at: datetime
-
-    class Config:
-        orm_mode = True
 
 
 class UserUpdate(BaseModel):
@@ -38,6 +37,8 @@ class DeliveryCreate(BaseModel):
 
 
 class DeliveryRead(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     user_id: int
     status: str
@@ -45,9 +46,6 @@ class DeliveryRead(BaseModel):
     eta: Optional[str] = None
     details: Optional[str] = None
     updated_at: datetime
-
-    class Config:
-        orm_mode = True
 
 
 class DeliveryUpdate(BaseModel):

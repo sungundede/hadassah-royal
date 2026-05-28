@@ -105,7 +105,7 @@ def update_user(user_id: int, user_update: UserUpdate, current_user: User = Depe
     user = session.get(User, user_id)
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
-    user_data = user_update.dict(exclude_unset=True)
+    user_data = user_update.model_dump(exclude_unset=True)
     for key, value in user_data.items():
         setattr(user, key, value)
     session.add(user)
@@ -154,7 +154,7 @@ async def update_delivery(delivery_id: int, delivery_update: DeliveryUpdate, ses
     delivery = session.get(Delivery, delivery_id)
     if not delivery:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Delivery not found")
-    update_data = delivery_update.dict(exclude_unset=True)
+    update_data = delivery_update.model_dump(exclude_unset=True)
     for key, value in update_data.items():
         setattr(delivery, key, value)
     delivery.updated_at = datetime.utcnow()

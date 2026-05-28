@@ -4,38 +4,52 @@
   left: 0;
   width: 100%;
   height: 4rem;
-  background: var(--black);
+  background: rgba(6, 6, 15, 0.78);
+  backdrop-filter: blur(22px) saturate(1.6);
+  -webkit-backdrop-filter: blur(22px) saturate(1.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   align-items: center;
-  justify-content: flex-start;
   gap: 2rem;
   padding: 0 3rem;
   z-index: 1000;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.5);
 }
 
+/* gold scan line along the top edge */
+.nav::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+/* ── brand ──────────────────────────────────────────────────── */
 .nav-brand {
-  font-family: "Playfair Display", serif;
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--white);
-  letter-spacing: 0.05em;
   flex-shrink: 0;
   display: inline-flex;
-  align-items: flex-end;
+  align-items: center;
 }
 
 .nav-logo {
   display: block;
   max-width: 120px;
   height: 3rem;
-  padding:0.3rem;
+  padding: 0.3rem;
+  filter: brightness(1.15) drop-shadow(0 0 8px rgba(201, 169, 110, 0.45));
+  transition: filter 300ms ease;
 }
 
-.nav-brand span {
-  color: var(--gold);
-  font-style: italic;
+.nav-brand:hover .nav-logo {
+  filter: brightness(1.25) drop-shadow(0 0 14px rgba(201, 169, 110, 0.65));
 }
 
+/* ── nav links ──────────────────────────────────────────────── */
 .nav-links {
   display: flex;
   align-items: center;
@@ -44,37 +58,35 @@
 }
 
 .nav-link {
-  font-size: 0.8rem;
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: .18rem;
-  text-transform: capitalize;
-  color: #f5f5f5;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
   transition: color 250ms ease;
   position: relative;
   display: inline-flex;
   align-items: center;
-  padding: 0 0.15rem;
+  padding: 0 0.1rem;
 }
 
 .nav-link::after {
   content: "";
   position: absolute;
-  bottom: -4px;
+  bottom: -5px;
   left: 0;
   width: 100%;
   height: 1px;
   background: var(--gold);
+  box-shadow: 0 0 8px var(--gold), 0 0 16px var(--gold-glow);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 250ms ease, opacity 250ms ease;
-  opacity: 0;
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-link:hover::after,
 .nav-link.active::after {
   transform: scaleX(1);
-  opacity: 1;
 }
 
 .nav-link:hover,
@@ -83,36 +95,27 @@
 }
 
 .nav-link-special {
-  color: #ffd166;
-  font-weight: 800;
-  animation: glow 1s ease-in-out infinite;
-  text-shadow: 0 0 10px rgba(255, 209, 102, 0.35);
+  color: var(--gold-bright);
+  font-weight: 700;
+  animation: glow-pulse 2.4s ease-in-out infinite;
 }
 
-@keyframes glow {
-  0%, 100% {
-    text-shadow: 0 0 8px rgba(255, 209, 102, 0.35);
-  }
-  50% {
-    text-shadow: 0 0 14px rgba(255, 209, 102, 0.55);
-  }
+@keyframes glow-pulse {
+  0%, 100% { text-shadow: 0 0 8px rgba(201, 169, 110, 0.35); }
+  50%       { text-shadow: 0 0 22px rgba(201, 169, 110, 0.7), 0 0 44px rgba(201, 169, 110, 0.25); }
 }
 
-.nav-link:hover::after,
-.nav-link.active::after {
-  width: 100%;
-}
-
+/* ── actions ────────────────────────────────────────────────── */
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.7rem;
 }
 
 .nav-icon {
-  color: var(--white);
-  font-size: 1.3rem;
-  transition: color 250ms ease;
+  color: var(--muted);
+  font-size: 1.25rem;
+  transition: color 250ms ease, filter 250ms ease;
   position: relative;
   display: flex;
   align-items: center;
@@ -120,43 +123,177 @@
 
 .nav-icon:hover {
   color: var(--gold);
+  filter: drop-shadow(0 0 7px var(--gold));
 }
 
 .cart-badge {
   position: absolute;
   top: -6px;
   right: -8px;
-  background: var(--gold);
+  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
   color: var(--black);
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   font-weight: 700;
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 0 10px var(--gold-glow);
 }
 
 .nav-burger {
   display: none;
   background: none;
   border: none;
-  color: var(--white);
-  font-size: 1.4rem;
+  color: var(--muted);
+  font-size: 1.3rem;
   cursor: pointer;
-  padding: 0.2rem;
+  padding: 0.25rem;
+  transition: color 200ms ease;
 }
 
-@media screen and (max-width: 860px) {
-  .nav {
-    padding: 0 1.5rem;
-  }
+.nav-burger:hover { color: var(--gold); }
 
-  .nav-burger {
-    display: flex;
-    align-items: center;
+/* ── account menu ───────────────────────────────────────────── */
+.account-menu {
+  position: relative;
+}
+
+.account-trigger {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+}
+
+/* green presence dot when logged in */
+.account-dot {
+  position: absolute;
+  bottom: 0;
+  right: -2px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4fffb0;
+  box-shadow: 0 0 6px rgba(79, 255, 176, 0.7);
+  border: 1.5px solid var(--bg);
+}
+
+/* glow ring when dropdown is open */
+.account-trigger.active {
+  color: var(--gold);
+  filter: drop-shadow(0 0 7px var(--gold));
+}
+
+/* ── dropdown panel ──────────────────────────────────────────── */
+.account-dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  width: 220px;
+  background: rgba(11, 11, 26, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 1px rgba(201, 169, 110, 0.1),
+    0 24px 48px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+  z-index: 200;
+  animation: dropdown-in 200ms cubic-bezier(0.4, 0, 0.2, 1) both;
+  transform-origin: top right;
+}
+
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94) translateY(-6px);
   }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── header section ─────────────────────────────────────────── */
+.dropdown-header {
+  padding: 0.9rem 1rem 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.dropdown-label {
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+
+.dropdown-email {
+  font-size: 0.82rem;
+  color: var(--white);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── divider ─────────────────────────────────────────────────── */
+.dropdown-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  margin: 0;
+}
+
+/* ── menu items ──────────────────────────────────────────────── */
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.72rem 1rem;
+  font-family: "Outfit", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 180ms ease, color 180ms ease;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--white);
+}
+
+.dropdown-item.danger { color: rgba(255, 107, 107, 0.75); }
+
+.dropdown-item.danger:hover {
+  background: rgba(255, 107, 107, 0.08);
+  color: var(--error);
+}
+
+.dropdown-icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+/* ── mobile ─────────────────────────────────────────────────── */
+@media screen and (max-width: 860px) {
+  .nav { padding: 0 1.5rem; }
+
+  .nav-burger { display: flex; align-items: center; }
 
   .nav-links {
     display: none;
@@ -165,22 +302,22 @@
     left: 0;
     width: 100%;
     flex-direction: column;
-    background: var(--black);
-    padding: 1.5rem 0;
+    background: rgba(6, 6, 15, 0.97);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    padding: 1.25rem 0;
     gap: 0;
-    border-top: 1px solid var(--gold);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
   }
 
-  .nav-links.open {
-    display: flex;
-  }
+  .nav-links.open { display: flex; }
 
   .nav-link {
-    padding: 0.85rem 2rem;
+    padding: 0.9rem 2rem;
     width: 100%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   }
 
-  .nav-link::after {
-    display: none;
-  }
+  .nav-link::after { display: none; }
 }

@@ -28,7 +28,7 @@ const Cart = ({ cart, onRemove, onClear }) => {
               <div className="cart-item-info">
                 <h4>{item.name}</h4>
                 <p className="cart-item-category">{item.category}</p>
-                <p className="cart-item-price">${item.price} × {item.qty}</p>
+                <p className="cart-item-price">Ksh {item.price.toLocaleString()} × {item.qty}</p>
               </div>
               <button className="cart-remove" onClick={() => onRemove(item.id)} aria-label="Remove item">
                 <AiOutlineDelete />
@@ -41,7 +41,7 @@ const Cart = ({ cart, onRemove, onClear }) => {
           <h3>Order Summary</h3>
           <div className="summary-row">
             <span>Subtotal</span>
-            <span>${total.toFixed(2)}</span>
+            <span>Ksh {total.toLocaleString()}</span>
           </div>
           <div className="summary-row">
             <span>Shipping</span>
@@ -49,7 +49,7 @@ const Cart = ({ cart, onRemove, onClear }) => {
           </div>
           <div className="summary-row total">
             <span>Total</span>
-            <span>${total.toFixed(2)}</span>
+            <span>Ksh {total.toLocaleString()}</span>
           </div>
           <button className="btn btn-gold full">Proceed to Checkout</button>
           <Link to="/" className="cart-continue">← Continue Shopping</Link>

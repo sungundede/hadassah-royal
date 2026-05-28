@@ -16,7 +16,7 @@ const ProductCard = ({ product, onAddToCart, dark = false }) => {
         </Link>
         <p className="product-desc">{description}</p>
         <div className="product-footer">
-          <span className="product-price">${price}</span>
+          <span className="product-price">Ksh {price.toLocaleString()}</span>
           <button className="product-add" onClick={() => onAddToCart(product)}>
             Add to Cart
           </button>
