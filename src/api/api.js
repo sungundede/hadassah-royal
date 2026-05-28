@@ -3,7 +3,14 @@ export const API_BASE = "http://localhost:8000";
 export async function handleResponse(response) {
   const text = await response.text();
   if (!response.ok) {
-    throw new Error(text || response.statusText);
+    let message = response.statusText;
+    try {
+      const json = JSON.parse(text);
+      message = json.detail || json.message || text;
+    } catch {
+      message = text || response.statusText;
+    }
+    throw new Error(message);
   }
 
   try {

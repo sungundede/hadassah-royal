@@ -40,15 +40,19 @@ const Deliveries = () => {
 
     const socket = new WebSocket(wsUrl);
     socket.onmessage = (event) => {
-      const payload = JSON.parse(event.data);
-      if (payload.user_id !== userId) return;
-      setDeliveries((prev) => {
-        const exists = prev.find((item) => item.id === payload.id);
-        if (exists) {
-          return prev.map((item) => (item.id === payload.id ? payload : item));
-        }
-        return [payload, ...prev];
-      });
+      try {
+        const payload = JSON.parse(event.data);
+        if (payload.user_id !== userId) return;
+        setDeliveries((prev) => {
+          const exists = prev.find((item) => item.id === payload.id);
+          if (exists) {
+            return prev.map((item) => (item.id === payload.id ? payload : item));
+          }
+          return [payload, ...prev];
+        });
+      } catch {
+        console.error("Failed to parse delivery update:", event.data);
+      }
     };
 
     socket.onerror = () => {

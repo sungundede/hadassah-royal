@@ -1,11 +1,11 @@
+from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import List, Optional
 
 from fastapi import Depends, FastAPI, HTTPException, status, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
-from sqlalchemy.exc import NoResultFound
-from sqlmodel import SQLModel, Session, select
+from sqlmodel import Session, select
 
 from .database import engine, init_db, get_session
 from .models import User, Delivery
@@ -25,14 +25,21 @@ from .security import (
     verify_password,
 )
 
-app = FastAPI(title="Hadassah Royal Backend")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_db()
+    yield
+
+
+app = FastAPI(title="Hadassah Royal Backend", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],
     allow_credentials=True,
-    allow_methods=["*"]
-    , allow_headers=["*"]
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
@@ -46,14 +53,9 @@ def get_current_user(token: str = Depends(oauth2_scheme), session: Session = Dep
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid authentication credentials")
     statement = select(User).where(User.email == subject)
     user = session.exec(statement).first()
-    if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+    if not user or not user.is_active:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found or inactive")
     return user
-
-
-@app.on_event("startup")
-def on_startup() -> None:
-    init_db()
 
 
 @app.post("/auth/register", response_model=UserRead)
@@ -148,7 +150,7 @@ def read_delivery(delivery_id: int, session: Session = Depends(get_session)) -> 
 
 
 @app.patch("/deliveries/{delivery_id}", response_model=DeliveryRead)
-def update_delivery(delivery_id: int, delivery_update: DeliveryUpdate, session: Session = Depends(get_session)) -> Delivery:
+async def update_delivery(delivery_id: int, delivery_update: DeliveryUpdate, session: Session = Depends(get_session)) -> Delivery:
     delivery = session.get(Delivery, delivery_id)
     if not delivery:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Delivery not found")
@@ -159,7 +161,7 @@ def update_delivery(delivery_id: int, delivery_update: DeliveryUpdate, session: 
     session.add(delivery)
     session.commit()
     session.refresh(delivery)
-    broadcast_delivery_update(delivery)
+    await broadcast_delivery_update(delivery)
     return delivery
 
 
@@ -174,7 +176,7 @@ async def delivery_stream(websocket: WebSocket) -> None:
         clients.remove(websocket)
 
 
-def broadcast_delivery_update(delivery: Delivery) -> None:
+async def broadcast_delivery_update(delivery: Delivery) -> None:
     payload = {
         "id": delivery.id,
         "user_id": delivery.user_id,
@@ -186,6 +188,6 @@ def broadcast_delivery_update(delivery: Delivery) -> None:
     }
     for client in clients[:]:
         try:
-            client.send_json(payload)
+            await client.send_json(payload)
         except RuntimeError:
             clients.remove(client)

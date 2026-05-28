@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { AiOutlineClose, AiOutlineShoppingCart, AiOutlineSearch } from "react-icons/ai";
-import { useAuth } from "../../contexts/AuthContext";
+import { AiOutlineClose, AiOutlineShoppingCart, AiOutlineSearch } from "react-icons/ai"import { useAuth } from "../../contexts/AuthContext";
 import "./Nav.css";
 
 const links = [
