@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { suits, shirts, shoes, newArrivals } from "../../data/products";
+import { newArrivals } from "../../data/products";
 import ProductCard from "../product/ProductCard";
 import "./Home.css";
 

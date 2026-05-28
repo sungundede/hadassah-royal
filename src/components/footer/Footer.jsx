@@ -10,8 +10,8 @@ const Footer = () => (
         <p>Luxury men's fashion curated for the discerning gentleman. Suits, shirts and shoes of uncompromising quality.</p>
         <div className="footer-socials">
           <a href="https://web.facebook.com/profile.php?id=100070617620093" target="_blank" rel="noreferrer" aria-label="Facebook"><AiOutlineFacebook /></a>
-          <a href="#" aria-label="Instagram"><AiOutlineInstagram /></a>
-          <a href="#" aria-label="Twitter"><AiOutlineTwitter /></a>
+          <a href="https://www.instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram"><AiOutlineInstagram /></a>
+          <a href="https://www.twitter.com" target="_blank" rel="noreferrer" aria-label="Twitter"><AiOutlineTwitter /></a>
         </div>
       </div>
 
