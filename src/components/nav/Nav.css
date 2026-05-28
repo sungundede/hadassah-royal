@@ -19,6 +19,15 @@
   color: var(--white);
   letter-spacing: 0.05em;
   flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-logo {
+  display: block;
+  max-width: 120px;
+  height: 3rem;
+  padding:0.3rem;
 }
 
 .nav-brand span {

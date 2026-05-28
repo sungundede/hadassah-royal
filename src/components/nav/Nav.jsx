@@ -18,7 +18,7 @@ const Nav = ({ cartCount = 0 }) => {
   return (
     <nav className="nav">
       <Link to="/" className="nav-brand">
-        Hadassah <span>Royal</span>
+        <img src="/fav.jpg" alt="Hadassah Royal" className="nav-logo" />
       </Link>
 
       <div className={open ? "nav-links open" : "nav-links"}>
